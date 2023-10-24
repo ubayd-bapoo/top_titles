@@ -9,7 +9,7 @@ SPARK = Spark()
 
 @router.get("/api/v1/top-titles/",
             tags=["Titles"],
-            description="To be updated",
+            description="Get endpoint to retrieve the top 15 Movies from the following dataset https://datasets.imdbws.com/",
             )
 def read_root():
     cleaned_data = []
