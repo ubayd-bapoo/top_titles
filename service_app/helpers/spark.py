@@ -41,14 +41,10 @@ class Spark:
         # Sort the DataFrame by ranking in descending order
         sorted_df = filtered_df.sort(col("ranking").desc())
 
-        # Select the top 15 movies
-        top_15_movies = sorted_df.limit(15)
-
-        # Show the top 15 movies
-        top_15_movies.show()
-
         # Join the two DataFrames based on the "tconst" column
-        top_titles_df = self._data_title_basic.join(top_15_movies, on="tconst", how="inner")
+        top_titles_df = self._data_title_basic.filter(col("titleType") == "movie")
+        top_titles_df = top_titles_df.join(sorted_df, on="tconst", how="inner")
+        top_titles_df = top_titles_df.sort(col("ranking").desc()).limit(15)
         top_titles_df.show()
 
         self.top_titles = top_titles_df.toJSON().collect()
